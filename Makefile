@@ -11,7 +11,7 @@ fmt:
 	terraform fmt && terraform validate
 
 apply:
-	terraform apply --auto-approve
+	make fmt && terraform apply --auto-approve
 
 destroy:
 	terraform apply -destroy --auto-approve

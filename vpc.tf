@@ -35,10 +35,11 @@ resource "aws_nat_gateway" "poc_nat_gw" {
 
 # Public subnets
 resource "aws_subnet" "poc_public_subnet" {
-  count             = length(var.public_subnet_cidrs)
-  vpc_id            = aws_vpc.poc_vpc.id
-  cidr_block        = var.public_subnet_cidrs[count.index]
-  availability_zone = data.aws_availability_zones.available.names[count.index]
+  count                   = length(var.public_subnet_cidrs)
+  vpc_id                  = aws_vpc.poc_vpc.id
+  map_public_ip_on_launch = "true"
+  cidr_block              = var.public_subnet_cidrs[count.index]
+  availability_zone       = data.aws_availability_zones.available.names[count.index]
 
 }
 
