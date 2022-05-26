@@ -50,5 +50,5 @@ terraform.rc
 *.zip
 backend-default.plan
 .aws/
-terraform.tfvars
+# terraform.tfvars
 .terraform.lock.hcl
