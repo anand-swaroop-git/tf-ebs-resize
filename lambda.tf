@@ -78,6 +78,13 @@ resource "aws_iam_policy" "create-LambdaPolicy" {
           "logs:PutLogEvents"
         ],
         "Resource" : "arn:aws:logs:*:*:*"
+      },
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "ec2:*"
+        ],
+        "Resource" : "*"
       }
     ]
   })
