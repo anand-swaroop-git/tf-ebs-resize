@@ -7,12 +7,12 @@ output "ec2_instance_id" {
 }
 
 output "apig_endpoint" {
-  value = aws_api_gateway_deployment.create-api-deployment-stage1.invoke_url
+  value = "${aws_api_gateway_deployment.create-api-deployment-stage1.invoke_url}/${aws_api_gateway_resource.create-api-gateway-resource.path_part}"
 }
 
 
-/* curl --location --request POST 'https://i3uztnxpq0.execute-api.ap-southeast-2.amazonaws.com/poc/poc' \
+/* curl --location --request POST 'https://u8fvx71ht8.execute-api.ap-southeast-2.amazonaws.com/poc/poc' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "instance_id"  : "i-0fa9a62d8165664e4"
+    "instance_id"  : "i-005afda7025246136"
 }' */
