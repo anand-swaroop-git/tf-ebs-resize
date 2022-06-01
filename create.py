@@ -1,6 +1,7 @@
 import json
 import boto3
 
+# Get Volume ID
 def lambda_handler(event, context):
     print("event => ", event)
     # payload = event['body']

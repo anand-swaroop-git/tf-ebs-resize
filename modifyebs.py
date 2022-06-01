@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     # TODO: Remove hardcoded size
     ec2.modify_volume(
         VolumeId = volume_id,
-        Size = 23,
+        Size = 24,
     )
     
     return {

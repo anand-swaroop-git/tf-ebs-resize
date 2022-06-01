@@ -1,7 +1,9 @@
 import json
 import boto3
 import datetime
+import os
 
+state_machine_arn = os.environ['STATE_MACHINE_ARN']
 def lambda_handler(event, context):
     payload = json.loads(event['body'])
     instance_id = payload['instance_id']
@@ -10,15 +12,14 @@ def lambda_handler(event, context):
 
     input_to_statemachine = {
             'instance_id': instance_id,
-        }
-    # TODO: Remove hardcoded state machine ARN
+    }
 
     execution_id = 'ebs-expansion' + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     sf.start_execution(    
-    stateMachineArn='arn:aws:states:ap-southeast-2:127632162537:stateMachine:MyStateMachine',    
-    name=execution_id,    
-    input=json.dumps(input_to_statemachine)
+    stateMachineArn = state_machine_arn,    
+    name = execution_id,    
+    input = json.dumps(input_to_statemachine)
     )   
 
     return {
