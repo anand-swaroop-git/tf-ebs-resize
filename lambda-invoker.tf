@@ -6,7 +6,7 @@ data "archive_file" "archive-file-invoker" {
 
 
 resource "aws_lambda_function" "invoker-lambda-function" {
-  function_name = "ebs-poc-invoker"
+  function_name = "state-machine-invoker"
   filename      = "invoker_lambda.zip"
   handler       = "invoker.lambda_handler"
   runtime       = "python3.8"
@@ -34,7 +34,7 @@ resource "aws_lambda_permission" "apigw-lambda-permission-invoker" {
   principal     = "apigateway.amazonaws.com"
 
   # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
-  source_arn = "arn:aws:execute-api:ap-southeast-2:127632162537:${aws_api_gateway_rest_api.ebs_poc.id}/*/${aws_api_gateway_method.create-api-gateway-method.http_method}${aws_api_gateway_resource.create-api-gateway-resource.path}"
+  source_arn = "arn:aws:execute-api:ap-southeast-2:127632162537:${aws_api_gateway_rest_api.ebs_poc.id}/*/${aws_api_gateway_method.api-gateway-method.http_method}${aws_api_gateway_resource.api-gateway-resource.path}"
 }
 
 # --------------------------------------------------------
@@ -69,7 +69,7 @@ EOF
 
 
 resource "aws_iam_policy" "invoker-LambdaPolicy" {
-  name        = "RackspaceLambdaPolicyinvoker"
+  name        = "LambdaPolicyinvoker"
   path        = "/"
   description = "IAM policy for lambda function"
   policy = jsonencode({

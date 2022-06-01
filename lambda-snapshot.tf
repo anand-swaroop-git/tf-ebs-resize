@@ -6,7 +6,7 @@ data "archive_file" "archive-file-snapshot" {
 
 
 resource "aws_lambda_function" "snapshot-lambda-function" {
-  function_name = "ebs-poc-snapshot"
+  function_name = "take-ebs-snapshot"
   filename      = "snapshot_lambda.zip"
   handler       = "snapshot.lambda_handler"
   runtime       = "python3.8"
@@ -27,9 +27,6 @@ resource "aws_lambda_permission" "apigw-lambda-permission-snapshot" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.snapshot-lambda-function.function_name
   principal     = "apigateway.amazonaws.com"
-
-  # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
-  #source_arn = "arn:aws:execute-api:ap-southeast-2:127632162537:${aws_api_gateway_rest_api.ebs_poc.id}/*/${aws_api_gateway_method.snapshot-api-gateway-method.http_method}${aws_api_gateway_resource.snapshot-api-gateway-resource.path}"
 }
 
 # --------------------------------------------------------
@@ -64,7 +61,7 @@ EOF
 
 
 resource "aws_iam_policy" "snapshot-LambdaPolicy" {
-  name        = "RackspaceLambdaPolicySnapshot"
+  name        = "LambdaPolicySnapshot"
   path        = "/"
   description = "IAM policy for lambda function"
   policy = jsonencode({

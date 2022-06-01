@@ -7,9 +7,9 @@ output "ec2_instance_id" {
 }
 
 output "apig_endpoint" {
-  value = "${aws_api_gateway_deployment.create-api-deployment-stage1.invoke_url}/${aws_api_gateway_resource.create-api-gateway-resource.path_part}"
+  value = "${aws_api_gateway_deployment.create-api-deployment-stage1.invoke_url}/${aws_api_gateway_resource.api-gateway-resource.path_part}"
 }
 
 output "curl_command" {
-  value = "curl --location --request POST ${aws_api_gateway_deployment.create-api-deployment-stage1.invoke_url}/${aws_api_gateway_resource.create-api-gateway-resource.path_part} --header 'Content-Type: application/json' --data-raw '{\"instance_id\": \"${aws_instance.ec2.id}\"}'"
+  value = "curl --location --request POST ${aws_api_gateway_deployment.create-api-deployment-stage1.invoke_url}/${aws_api_gateway_resource.api-gateway-resource.path_part} --header 'Content-Type: application/json' --data-raw '{\"instance_id\": \"${aws_instance.ec2.id}\"}'"
 }

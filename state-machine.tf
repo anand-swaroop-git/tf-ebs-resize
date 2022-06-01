@@ -13,7 +13,7 @@ resource "aws_sfn_state_machine" "sfn_state_machine" {
       "OutputPath": "$.Payload",
       "Parameters": {
         "Payload.$": "$",
-        "FunctionName": "${aws_lambda_function.create-lambda-function.arn}:$LATEST"
+        "FunctionName": "${aws_lambda_function.volumeid-lambda-function.arn}:$LATEST"
       },
       "Retry": [
         {
@@ -116,7 +116,7 @@ resource "aws_iam_policy" "statemachine-policy" {
           "lambda:InvokeFunction"
         ],
         "Resource" : [
-          "${aws_lambda_function.create-lambda-function.arn}:*",
+          "${aws_lambda_function.volumeid-lambda-function.arn}:*",
           "${aws_lambda_function.snapshot-lambda-function.arn}:*",
           "${aws_lambda_function.modifyebs-lambda-function.arn}:*"
         ]
@@ -127,7 +127,7 @@ resource "aws_iam_policy" "statemachine-policy" {
           "lambda:InvokeFunction"
         ],
         "Resource" : [
-          "${aws_lambda_function.create-lambda-function.arn}",
+          "${aws_lambda_function.volumeid-lambda-function.arn}",
           "${aws_lambda_function.snapshot-lambda-function.arn}",
           "${aws_lambda_function.modifyebs-lambda-function.arn}"
         ]

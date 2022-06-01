@@ -44,7 +44,7 @@ resource "aws_security_group" "allow_web" {
 
 resource "aws_instance" "ec2" {
   ami                    = "ami-0b21dcff37a8cd8a4"
-  instance_type          = "t2.nano"
+  instance_type          = "c5.large"
   subnet_id              = aws_subnet.poc_public_subnet[0].id
   vpc_security_group_ids = [aws_security_group.allow_web.id]
   iam_instance_profile   = aws_iam_instance_profile.dev-resources-iam-profile.name
@@ -52,7 +52,7 @@ resource "aws_instance" "ec2" {
   root_block_device {
     delete_on_termination = true
     volume_type           = "gp2"
-    volume_size           = 23
+    volume_size           = 8
   }
   user_data = file("ssm_agent_install.sh")
 }
