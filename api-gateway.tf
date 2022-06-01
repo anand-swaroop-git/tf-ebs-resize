@@ -28,7 +28,7 @@ resource "aws_api_gateway_integration" "createproduct-lambda" {
   integration_http_method = "POST"
   type                    = "AWS_PROXY"
 
-  uri = aws_lambda_function.create-lambda-function.invoke_arn
+  uri = aws_lambda_function.invoker-lambda-function.invoke_arn
 }
 
 # Stage 1 Deployment

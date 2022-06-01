@@ -3,8 +3,8 @@ import boto3
 
 def lambda_handler(event, context):
     print("event => ", event)
-    payload = event['body']
-    instance_id = payload['instance_id']
+    # payload = event['body']
+    instance_id = event['instance_id']
     
     session = boto3.Session(region_name="ap-southeast-2")
     ec2 = session.client('ec2')
