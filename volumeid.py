@@ -22,6 +22,7 @@ def lambda_handler(event, context):
         'statusCode': 201,
         'body': json.dumps({
             'volume_id': volume_id,
+            'instance_id': instance_id,
             'old_volume_size': volume_size,
             'status': 'EBS modification completed successfully'
         })

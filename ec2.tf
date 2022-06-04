@@ -49,7 +49,7 @@ resource "aws_instance" "ec2" {
   root_block_device {
     delete_on_termination = true
     volume_type           = "gp2"
-    volume_size           = 8
+    volume_size           = var.initial_ebs_size
   }
   user_data = file("ssm_agent_install.sh")
 }

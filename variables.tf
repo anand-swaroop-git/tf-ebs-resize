@@ -49,3 +49,6 @@ variable "route" {
 
 variable "name_sg" {}
 variable "description_sg" {}
+
+variable "initial_ebs_size" {}
+variable "final_ebs_size" {}

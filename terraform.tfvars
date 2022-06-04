@@ -33,3 +33,6 @@ route = [
     nat_gateway_id = "true"
   }
 ]
+
+initial_ebs_size = 8
+final_ebs_size   = 15
