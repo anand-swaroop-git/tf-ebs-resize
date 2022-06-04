@@ -16,23 +16,6 @@ resource "aws_internet_gateway" "poc_internet_gateway" {
   vpc_id = aws_vpc.poc_vpc.id
 }
 
-# Elastic IPs for NAT Gateways
-
-resource "aws_eip" "poc_nat_gw_eip" {
-  count      = length(var.poc_av_zone_subnet)
-  vpc        = true
-  depends_on = [aws_internet_gateway.poc_internet_gateway]
-
-}
-
-# NAT Gateway
-resource "aws_nat_gateway" "poc_nat_gw" {
-  count         = length(var.poc_av_zone_subnet)
-  allocation_id = aws_eip.poc_nat_gw_eip[count.index].id
-  subnet_id     = aws_subnet.poc_public_subnet[count.index].id
-  depends_on    = [aws_internet_gateway.poc_internet_gateway]
-}
-
 # Public subnets
 resource "aws_subnet" "poc_public_subnet" {
   count                   = length(var.public_subnet_cidrs)
@@ -41,14 +24,6 @@ resource "aws_subnet" "poc_public_subnet" {
   cidr_block              = var.public_subnet_cidrs[count.index]
   availability_zone       = data.aws_availability_zones.available.names[count.index]
 
-}
-
-# Private subnets for AV-Zone
-resource "aws_subnet" "poc_private_subnet" {
-  count             = length(var.poc_av_zone_subnet)
-  vpc_id            = aws_vpc.poc_vpc.id
-  cidr_block        = var.poc_av_zone_subnet[count.index]
-  availability_zone = data.aws_availability_zones.available.names[count.index]
 }
 
 resource "aws_security_group" "poc_security_group" {
@@ -95,33 +70,6 @@ resource "aws_security_group" "poc_security_group" {
   }
 }
 
-
-
-# Routing and association for private subnets
-#-----------------------------------------------------------------
-# One route table for each private subnet.
-resource "aws_route_table" "poc_av_zone_rt" {
-  count  = length(var.poc_av_zone_subnet)
-  vpc_id = aws_vpc.poc_vpc.id
-
-  dynamic "route" {
-    for_each = var.route
-    content {
-      cidr_block     = lookup(route.value, "cidr_block", "0.0.0.0/0")
-      nat_gateway_id = lookup(route.value, "nat_gateway_id", "false") == "true" ? aws_nat_gateway.poc_nat_gw[count.index].id : null
-      gateway_id     = lookup(route.value, "gateway_id", "false") == "true" ? aws_internet_gateway.poc_internet_gateway.id : null
-    }
-  }
-}
-
-resource "aws_route_table_association" "poc_av_zone_assoc" {
-  count          = length(var.poc_av_zone_subnet)
-  subnet_id      = aws_subnet.poc_private_subnet[count.index].id
-  route_table_id = aws_route_table.poc_av_zone_rt[count.index].id
-}
-#-----------------------------------------------------------------
-
-
 # Routing and association for public subnets
 #-----------------------------------------------------------------
 resource "aws_route_table" "poc_public_rt" {
@@ -138,6 +86,5 @@ resource "aws_route_table_association" "poc_public_assoc" {
   subnet_id      = aws_subnet.poc_public_subnet[count.index].id
   route_table_id = aws_route_table.poc_public_rt.id
 }
-#-----------------------------------------------------------------
 
 
