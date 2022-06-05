@@ -1,4 +1,6 @@
-aws_region = "ap-southeast-2"
+aws_region       = "ap-southeast-2"
+initial_ebs_size = 8
+final_ebs_size   = 10
 
 
 vpc_cidr            = "10.1.0.0/16"
@@ -33,6 +35,3 @@ route = [
     nat_gateway_id = "true"
   }
 ]
-
-initial_ebs_size = 8
-final_ebs_size   = 15

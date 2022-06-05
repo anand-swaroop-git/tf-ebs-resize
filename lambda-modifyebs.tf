@@ -19,6 +19,7 @@ resource "aws_lambda_function" "modifyebs-lambda-function" {
   environment {
     variables = {
       FINAL_EBS_SIZE = var.final_ebs_size
+      REGION         = var.aws_region
     }
   }
 }

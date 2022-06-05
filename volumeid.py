@@ -1,5 +1,7 @@
 import json
 import boto3
+import os
+aws_region = os.environ['REGION']
 
 # Get Volume ID
 def lambda_handler(event, context):
@@ -7,7 +9,7 @@ def lambda_handler(event, context):
     # payload = event['body']
     instance_id = event['instance_id']
     
-    session = boto3.Session(region_name="ap-southeast-2")
+    session = boto3.Session(region_name=aws_region)
     ec2 = session.client('ec2')
     response = ec2.describe_instances(
         InstanceIds=[instance_id]

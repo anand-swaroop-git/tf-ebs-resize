@@ -39,6 +39,7 @@ resource "aws_security_group" "allow_web" {
   }
 }
 
+# TODO: Remove hardcoded AMI
 resource "aws_instance" "ec2" {
   ami                    = "ami-0b21dcff37a8cd8a4"
   instance_type          = "c5.large"

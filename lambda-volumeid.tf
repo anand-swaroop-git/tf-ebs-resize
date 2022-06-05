@@ -16,6 +16,11 @@ resource "aws_lambda_function" "volumeid-lambda-function" {
   # Terraform was not picking up the changes in the code so did not generate the updated zip file.
   # Resolved from this comment - https://github.com/hashicorp/terraform/issues/8344#issuecomment-265548941
   source_code_hash = data.archive_file.archive-file-volumeid.output_base64sha256
+  environment {
+    variables = {
+      REGION = var.aws_region
+    }
+  }
 }
 
 # --------------------------------------------------------
