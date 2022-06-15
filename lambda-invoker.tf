@@ -40,7 +40,7 @@ resource "aws_lambda_permission" "apigw-lambda-permission-invoker" {
 }
 
 # --------------------------------------------------------
-# CloudWatch Log Group with 30 Days Retention
+# CloudWatch Log Group
 # --------------------------------------------------------
 
 resource "aws_cloudwatch_log_group" "invoker-log-group" {

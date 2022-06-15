@@ -36,7 +36,7 @@ resource "aws_lambda_permission" "apigw-lambda-permission-modifyebs" {
 }
 
 # --------------------------------------------------------
-# CloudWatch Log Group with 30 Days Retention
+# CloudWatch Log Group
 # --------------------------------------------------------
 
 resource "aws_cloudwatch_log_group" "modifyebs-log-group" {

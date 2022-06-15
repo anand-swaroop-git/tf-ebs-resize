@@ -37,7 +37,7 @@ resource "aws_lambda_permission" "apigw-lambda-permission-ssmrun" {
 }
 
 # --------------------------------------------------------
-# CloudWatch Log Group with 30 Days Retention
+# CloudWatch Log Group
 # --------------------------------------------------------
 
 resource "aws_cloudwatch_log_group" "ssmrun-log-group" {
